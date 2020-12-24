@@ -75,19 +75,19 @@ namespace connect_DB
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO [product] (name, price, color, type)VALUES(@Name, @price, @color, @type)", sqlConnection);
+                    SqlCommand command = new SqlCommand("INSERT INTO [product] (name, price, univ, age)VALUES(@Name, @price, @univ, @age)", sqlConnection);
 
                     SqlDataReader sqlReader1 = null;
 
-                    SqlCommand command1 = new SqlCommand("SELECT [id_color] FROM[color] WHERE [name_color]=@name_color", sqlConnection);
+                    SqlCommand command1 = new SqlCommand("SELECT [id_univ] FROM[] WHERE [name_univ]=@name_univ", sqlConnection);
 
-                    command1.Parameters.AddWithValue("name_color", comboBox1.Text);
+                    command1.Parameters.AddWithValue("name_univ", comboBox1.Text);
 
                     SqlDataReader sqlReader2 = null;
 
-                    SqlCommand command2 = new SqlCommand("SELECT [id_type] FROM[type] WHERE [name_type]=@name_type", sqlConnection);
+                    SqlCommand command2 = new SqlCommand("SELECT [id_age] FROM[age] WHERE [name_age]=@name_age", sqlConnection);
 
-                    command2.Parameters.AddWithValue("name_type", comboBox2.Text);
+                    command2.Parameters.AddWithValue("name_age", comboBox2.Text);
 
                     command.Parameters.AddWithValue("Name", textBox1.Text);
                     command.Parameters.AddWithValue("price", textBox2.Text);
@@ -97,7 +97,7 @@ namespace connect_DB
 
                         while (await sqlReader1.ReadAsync())
                         {
-                            command.Parameters.AddWithValue("color", sqlReader1["id_color"]);
+                            command.Parameters.AddWithValue("univ", sqlReader1["id_univ"]);
                         }
                     }
                     catch (Exception ex)
@@ -116,7 +116,7 @@ namespace connect_DB
 
                         while (await sqlReader2.ReadAsync())
                         {
-                            command.Parameters.AddWithValue("type", sqlReader2["id_type"]);
+                            command.Parameters.AddWithValue("age", sqlReader2["id_age"]);
                         }
                     }
                     catch (Exception ex)
@@ -255,16 +255,16 @@ namespace connect_DB
             SqlDataReader sqlReader1 = null;
             SqlDataReader sqlReader2 = null;
 
-            SqlCommand command = new SqlCommand("SELECT  [product].[id], [product].[name], [product].[price], [color].[name_color], [type].[name_type] FROM[product], [color], [type] WHERE[color].[id_color] = [product].[color] and [product].[type] = [type].[id_type]", sqlConnection);
-            SqlCommand command1 = new SqlCommand("SELECT * FROM[color]", sqlConnection);
-            SqlCommand command2 = new SqlCommand("SELECT * FROM[type]", sqlConnection);
+            SqlCommand command = new SqlCommand("SELECT  [product].[id], [product].[name], [product].[price], [univ].[name_univ], [age].[name_age] FROM[product], [univ], [age] WHERE[univ].[id_univ] = [product].[univ] and [product].[age] = [age].[id_age]", sqlConnection);
+            SqlCommand command1 = new SqlCommand("SELECT * FROM[univ]", sqlConnection);
+            SqlCommand command2 = new SqlCommand("SELECT * FROM[age]", sqlConnection);
             try
             {
                 sqlReader = await command.ExecuteReaderAsync();
 
                 while (await sqlReader.ReadAsync())
                 {
-                    listBox1.Items.Add(Convert.ToString(sqlReader["id"]) + "\t" + Convert.ToString(sqlReader["name"]) + "\t" + Convert.ToString(sqlReader["price"]) + "\t" + Convert.ToString(sqlReader["name_color"]) + "\t\t" + Convert.ToString(sqlReader["name_type"]));
+                    listBox1.Items.Add(Convert.ToString(sqlReader["id"]) + "\t" + Convert.ToString(sqlReader["name"]) + "\t" + Convert.ToString(sqlReader["price"]) + "\t" + Convert.ToString(sqlReader["name_univ"]) + "\t\t" + Convert.ToString(sqlReader["name_age"]));
                 }
 
             }
@@ -285,8 +285,8 @@ namespace connect_DB
 
                 while (await sqlReader1.ReadAsync())
                 {
-                    listBox2.Items.Add(Convert.ToString(sqlReader1["id_color"]) + "\t" + Convert.ToString(sqlReader1["name_color"]));
-                    comboBox1.Items.Add(Convert.ToString(sqlReader1["name_color"]));
+                    listBox2.Items.Add(Convert.ToString(sqlReader1["id_univ"]) + "\t" + Convert.ToString(sqlReader1["name_univ"]));
+                    comboBox1.Items.Add(Convert.ToString(sqlReader1["name_univ"]));
                 }
 
             }
@@ -306,8 +306,8 @@ namespace connect_DB
 
                 while (await sqlReader2.ReadAsync())
                 {
-                    listBox3.Items.Add(Convert.ToString(sqlReader2["id_type"]) + "\t" + Convert.ToString(sqlReader2["name_type"]));
-                    comboBox2.Items.Add(Convert.ToString(sqlReader2["name_type"]));
+                    listBox3.Items.Add(Convert.ToString(sqlReader2["id_age"]) + "\t" + Convert.ToString(sqlReader2["name_age"]));
+                    comboBox2.Items.Add(Convert.ToString(sqlReader2["name_age"]));
                 }
 
             }
@@ -335,19 +335,19 @@ namespace connect_DB
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("UPDATE [product] SET [name]=@Name, [price]=@price, [color]=@color, [type]=@type WHERE [id]=@id", sqlConnection);
+                    SqlCommand command = new SqlCommand("UPDATE [product] SET [name]=@Name, [price]=@price, [univ]=@univ, [age]=@age WHERE [id]=@id", sqlConnection);
 
                     SqlDataReader sqlReader1 = null;
 
-                    SqlCommand command1 = new SqlCommand("SELECT [id_color] FROM[color] WHERE [name_color]=@name_color", sqlConnection);
+                    SqlCommand command1 = new SqlCommand("SELECT [id_univ] FROM[univ] WHERE [name_univ]=@name_univ", sqlConnection);
 
-                    command1.Parameters.AddWithValue("name_color", comboBox1.Text);
+                    command1.Parameters.AddWithValue("name_univ", comboBox1.Text);
 
                     SqlDataReader sqlReader2 = null;
 
-                    SqlCommand command2 = new SqlCommand("SELECT [id_type] FROM[type] WHERE [name_type]=@name_type", sqlConnection);
+                    SqlCommand command2 = new SqlCommand("SELECT [id_age] FROM[age] WHERE [name_age]=@name_age", sqlConnection);
 
-                    command2.Parameters.AddWithValue("name_type", comboBox2.Text);
+                    command2.Parameters.AddWithValue("name_age", comboBox2.Text);
 
                     command.Parameters.AddWithValue("id", textBox4.Text);
                     command.Parameters.AddWithValue("Name", textBox1.Text);
@@ -358,7 +358,7 @@ namespace connect_DB
 
                         while (await sqlReader1.ReadAsync())
                         {
-                            command.Parameters.AddWithValue("color", sqlReader1["id_color"]);
+                            command.Parameters.AddWithValue("univ", sqlReader1["id_univ"]);
                         }
                     }
                     catch (Exception ex)
@@ -377,7 +377,7 @@ namespace connect_DB
 
                         while (await sqlReader2.ReadAsync())
                         {
-                            command.Parameters.AddWithValue("type", sqlReader2["id_type"]);
+                            command.Parameters.AddWithValue("age", sqlReader2["id_age"]);
                         }
                     }
                     catch (Exception ex)
@@ -435,7 +435,7 @@ namespace connect_DB
             }
         }
 
-        //insert color
+        //insert univ
         private void button6_Click(object sender, EventArgs e)
         {
             label13.Visible = true;
@@ -446,14 +446,14 @@ namespace connect_DB
             button14.Visible = true;
         }
 
-        //save insert data color
+        //save insert data univ
         private async void button14_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBox6.Text) && !string.IsNullOrWhiteSpace(textBox6.Text))
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO [color] (name_color)VALUES(@Name)", sqlConnection);
+                    SqlCommand command = new SqlCommand("INSERT INTO [univ] (name_univ)VALUES(@Name)", sqlConnection);
 
                     command.Parameters.AddWithValue("Name", textBox6.Text);
 
@@ -482,10 +482,10 @@ namespace connect_DB
             }
         }
 
-        //delete from color
+        //delete from univ
         private async void button4_Click(object sender, EventArgs e)
         {
-            SqlCommand command = new SqlCommand("DELETE FROM [color] WHERE [id_color] = @id", sqlConnection);
+            SqlCommand command = new SqlCommand("DELETE FROM [univ] WHERE [id_univ] = @id", sqlConnection);
             try
             {
                 for (int i = 0; i < listBox2.Items.Count; i++)
@@ -510,7 +510,7 @@ namespace connect_DB
             button11_Click(null, null);
         }
 
-        //changing data in a color
+        //changing data in a univ
         private void button5_Click(object sender, EventArgs e)
         {
             try
@@ -540,14 +540,14 @@ namespace connect_DB
             }
         }
 
-        //save changing data color
+        //save changing data univ
         private async void button13_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBox6.Text) && !string.IsNullOrWhiteSpace(textBox6.Text))
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("UPDATE [color] SET [name_color]=@Name WHERE [id_color]=@id", sqlConnection);
+                    SqlCommand command = new SqlCommand("UPDATE [univ] SET [name_color]=@Name WHERE [id_univ]=@id", sqlConnection);
                     
                     command.Parameters.AddWithValue("id", textBox3.Text);
                     command.Parameters.AddWithValue("Name", textBox6.Text);
@@ -577,7 +577,7 @@ namespace connect_DB
             }
         }
 
-        //insert type
+        //insert age
         private void button9_Click(object sender, EventArgs e)
         {
             label11.Visible = true;
@@ -596,7 +596,7 @@ namespace connect_DB
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO [type] (name_type)VALUES(@Name)", sqlConnection);
+                    SqlCommand command = new SqlCommand("INSERT INTO [age] (name_age)VALUES(@Name)", sqlConnection);
 
                     command.Parameters.AddWithValue("Name", textBox7.Text);
 
@@ -625,10 +625,10 @@ namespace connect_DB
             }
         }
 
-        //delete from type
+        //delete from age
         private async void button7_Click(object sender, EventArgs e)
         {
-            SqlCommand command = new SqlCommand("DELETE FROM [type] WHERE [id_type] = @id", sqlConnection);
+            SqlCommand command = new SqlCommand("DELETE FROM [age] WHERE [id_age] = @id", sqlConnection);
             try
             {
                 for (int i = 0; i < listBox3.Items.Count; i++)
@@ -653,7 +653,7 @@ namespace connect_DB
             button11_Click(null, null);
         }
 
-        //changing data in a type
+        //changing data in a age
         private void button8_Click(object sender, EventArgs e)
         {
             try
@@ -683,7 +683,7 @@ namespace connect_DB
             }
         }
 
-        //save changing data type
+        //save changing data age
         private async void button15_Click(object sender, EventArgs e)
         {
 
@@ -691,7 +691,7 @@ namespace connect_DB
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("UPDATE [type] SET [name_type]=@Name WHERE [id_type]=@id", sqlConnection);
+                    SqlCommand command = new SqlCommand("UPDATE [age] SET [name_age]=@Name WHERE [id_age]=@id", sqlConnection);
 
                     command.Parameters.AddWithValue("id", textBox5.Text);
                     command.Parameters.AddWithValue("Name", textBox7.Text);
@@ -727,15 +727,15 @@ namespace connect_DB
         private async void печатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SqlDataReader sqlReader = null;
-            SqlCommand command = new SqlCommand("SELECT  [product].[id], [product].[name], [product].[price], [color].[name_color], [type].[name_type] FROM[product], [color], [type] WHERE[color].[id_color] = [product].[color] and [product].[type] = [type].[id_type]", sqlConnection);
+            SqlCommand command = new SqlCommand("SELECT  [product].[id], [product].[name], [product].[price], [univ].[name_univ], [age].[name_age] FROM[product], [univ], [age] WHERE[univ].[id_univ] = [product].[univ] and [product].[age] = [age].[id_age]", sqlConnection);
             try
             {
                 sqlReader = await command.ExecuteReaderAsync();
-                result += ("\t\t\t\t" + "ТОВАРЫ" + "\n\n");
-                result += ("id" + "\t" + "Название" + "\t" + "Стоимость" + " руб.\t" + "Цвет" + "      \t" + "Тип кузова" + "\n");
+                result += ("\t\t\t\t" + "КОНСТРУКТОРЫ" + "\n\n");
+                result += ("id" + "\t" + "Название" + "             \t" + "Стоимость" + " руб.      \t" + "Вселенная" + "      \t" + "Возраст" + "\n");
                 while (await sqlReader.ReadAsync())
                 {
-                    result += (Convert.ToString(sqlReader["id"]) + "\t" + Convert.ToString(sqlReader["name"]) + "\t\t" + Convert.ToString(sqlReader["price"]) + " руб.\t" + Convert.ToString(sqlReader["name_color"]) + "      \t" + Convert.ToString(sqlReader["name_type"]) + "\n");
+                    result += (Convert.ToString(sqlReader["id"]) + "\t" + Convert.ToString(sqlReader["name"]) + "\t\t" + Convert.ToString(sqlReader["price"]) + " руб.\t" + Convert.ToString(sqlReader["name_univ"]) + "      \t" + Convert.ToString(sqlReader["name_age"]) + "\n");
                 }
 
             }
@@ -750,16 +750,16 @@ namespace connect_DB
             }
 
             SqlDataReader sqlReader1 = null;
-            SqlCommand command1 = new SqlCommand("SELECT * FROM[color]", sqlConnection);
+            SqlCommand command1 = new SqlCommand("SELECT * FROM[univ]", sqlConnection);
 
             try
             {
                 sqlReader1 = await command1.ExecuteReaderAsync();
-                result += ("\n\n\t\t\t\t" + "ЦВЕТА" + "\n\n");
+                result += ("\n\n\t\t\t\t" + "Вселенные" + "\n\n");
                 result += ("id" + "\t" + "Название" + "\n");
                 while (await sqlReader1.ReadAsync())
                 {
-                    result += (Convert.ToString(sqlReader1["id_color"]) + "\t" + Convert.ToString(sqlReader1["name_color"]) + "\n");
+                    result += (Convert.ToString(sqlReader1["id_univ"]) + "\t" + Convert.ToString(sqlReader1["name_univ"]) + "\n");
                 }
 
             }
@@ -774,16 +774,16 @@ namespace connect_DB
             }
 
             SqlDataReader sqlReader2 = null;
-            SqlCommand command2 = new SqlCommand("SELECT * FROM[type]", sqlConnection);
+            SqlCommand command2 = new SqlCommand("SELECT * FROM[age]", sqlConnection);
 
             try
             {
                 sqlReader2 = await command2.ExecuteReaderAsync();
-                result += ("\n\n\t\t\t\t" + "ТИПЫ КУЗОВОВ" + "\n\n");
+                result += ("\n\n\t\t\t\t" + "Возрастное ограничение" + "\n\n");
                 result += ("id" + "\t" + "Название" + "\n");
                 while (await sqlReader2.ReadAsync())
                 {
-                    result += (Convert.ToString(sqlReader2["id_type"]) + "\t" + Convert.ToString(sqlReader2["name_type"]) + "\n");
+                    result += (Convert.ToString(sqlReader2["id_age"]) + "\t" + Convert.ToString(sqlReader2["name_age"]) + "\n");
                 }
 
             }
